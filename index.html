@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Vica: Famous Last Words</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=Special+Elite&family=Nothing+You+Could+Do&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #050505;
+            --bg-paper: #161616;
+            --text-main: #d0d0d0;
+            --accent-blood: #800000;
+            --accent-vivid: #ff0000;
+            --font-gothic: 'IM Fell English SC', serif;
+            --font-typewriter: 'Special Elite', cursive;
+            --font-messy: 'Nothing You Could Do', cursive;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--bg-dark);
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)),
+                url('https://www.transparenttextures.com/patterns/dark-paper-2.png');
+            font-family: var(--font-typewriter);
+            overflow: hidden; /* Evita scroll en el body para mantener los elementos flotantes en su lugar */
+        }
+
+        /* --- CONTENEDOR DE PÁGINAS --- */
+        .page {
+            position: absolute;
+            text-align: center;
+            width: 95%; /* Más ancho para aprovechar espacio */
+            max-width: 800px; /* Aumentado de 650px a 800px */
+            max-height: 90vh; /* Para que no se salga de la pantalla verticalmente */
+            display: none;
+            opacity: 0;
+            z-index: 10;
+            overflow-y: auto; /* Permite scroll si el texto es muy largo */
+            padding: 20px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-blood) transparent;
+        }
+
+        /* Estilo del scrollbar para Chrome/Safari */
+        .page::-webkit-scrollbar { width: 5px; }
+        .page::-webkit-scrollbar-thumb { background: var(--accent-blood); border-radius: 10px; }
+
+        .page.active {
+            display: block;
+            opacity: 1;
+            animation: introSad 1.2s ease-out forwards;
+        }
+
+        @keyframes introSad {
+            0% { transform: scale(1.1); filter: blur(15px); opacity: 0; }
+            100% { transform: scale(1); filter: blur(0); opacity: 1; }
+        }
+
+        /* --- ESTILO DE LA CARTA --- */
+        .carta {
+            background: var(--bg-paper);
+            padding: 40px;
+            position: relative;
+            border: 1px solid #333;
+            box-shadow: 0 0 50px rgba(0,0,0,1);
+            /* Efecto papel cortado más sutil para no comerse el texto */
+            clip-path: polygon(0% 1%, 100% 0%, 99% 100%, 1% 99%);
+            margin-bottom: 20px;
+        }
+
+        h1 { 
+            font-family: var(--font-gothic);
+            color: var(--text-main); 
+            margin-bottom: 20px; 
+            font-size: clamp(2.5rem, 8vw, 4rem); /* Tamaño responsivo */
+            text-shadow: 3px 3px 0px var(--accent-blood);
+        }
+
+        p { 
+            color: #b0b0b0; 
+            font-size: clamp(1rem, 4vw, 1.25rem); 
+            line-height: 1.6; 
+            margin-bottom: 20px;
+            text-align: justify;
+            hyphens: auto;
+        }
+
+        strong {
+            color: white;
+            font-family: var(--font-messy);
+            font-size: 1.4rem;
+            text-decoration: underline wavy var(--accent-vivid);
+        }
+
+        .divider {
+            font-size: 1.5rem;
+            color: #444;
+            margin: 20px 0;
+            letter-spacing: 10px;
+        }
+
+        /* --- BOTÓN --- */
+        .btn-next {
+            margin-top: 10px;
+            padding: 15px 45px;
+            font-family: var(--font-typewriter);
+            background: transparent;
+            color: var(--accent-blood);
+            border: 2px solid var(--accent-blood);
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-next:hover { 
+            background: var(--accent-blood);
+            color: white;
+            box-shadow: 0 0 20px var(--accent-blood);
+        }
+
+        /* --- LACRE --- */
+        .lacre {
+            width: 70px;
+            height: 70px;
+            background-color: #100000;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+            border: 2px solid var(--accent-blood);
+            color: var(--accent-blood);
+            font-family: var(--font-gothic);
+            font-size: 1.8rem;
+            transform: rotate(-10deg);
+        }
+
+        /* --- ELEMENTOS FLOTANTES --- */
+        .emo-item {
+            position: absolute;
+            color: #333;
+            user-select: none;
+            animation: emoFall 7s linear infinite;
+            opacity: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @keyframes emoFall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+            50% { opacity: 0.4; color: var(--accent-blood); }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        @media (max-width: 600px) {
+            .carta { padding: 25px; }
+            .page { width: 98%; padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page active" id="page1">
+        <h1>Vica (nuevamente)...</h1>
+        <div class="carta">
+            <p style="text-align: center; font-family: var(--font-messy); font-size: 1.5rem; color: white;">
+                Ésta vez le puse esfuerzo asi que leelooo. Sabes que no estoy pasando por un buen momento que digamos, así que quiero que antiendas, si?
+            </p>
+            <div class="divider">💀✖️💀</div>
+            <p style="text-align: center;">Tengo algo que decirte (nuevamente)</p>
+            <button class="btn-next" onclick="nextPage(2)">Escúchame ❤️‍🩹</button>
+        </div>
+    </div>
+
+    <div class="page" id="page2">
+        <div class="carta">
+            <p><strong>Perdón...</strong> No se... como empezar, sabes... lo he pensado mucho, en la escuela también estuve mucho tiempo pensativo y... simplemente no puedo cargar con tanto dolor en mi corazón</p>
+            
+            <p>Mi mundo se cae en pedazos cada vez... y estoy un poco... cansado de mi y de todo, quiero decirte nuevamente que te amo, me duele verte con otro pero aun asi no dejo de pensarte, ésto empezó hace mucho, mi depresión ha sido algo incurable desde los 11 años al menos, cada dia lloro, cada noche, tengo pensamientos suicidas y estoy al borde de una pendiente, yo se que lo de nosotros... se acabó, no me gusta esa idea pero, tengo que aceptarla, porque a mi desgracia, nada va a cambiar... lo intenté, intenté mejorar para ti, pero esa oportunidad nunca se me dió, y me duele en lo mas profundo de mi alma...</p>
+            
+            <p>Hoy fuí a despedirme de ti, a pasar el rato que me queda con la persona que amo y ¡no me arrepiento!, es doloroso que sea asi de cariñosa conmigo solo porque estoy colgando en un hilo, pero te agradezco que me hayas dado ese honor de haberte abrazado, y besado (aunque sea en la cara) por última vez... NO ME ARREPIENTO DE NADA DE LO DE HOY, AMÉ que fueras asi, pero fué solo hoy... mañana, pasado y todos los días sig iban a ser completamente distinto. Gracias por todo, por el cariño y los momentos bonitos que pasamos, pero... todo tiene un fin... TE AMO, VICA</p>
+            
+            <p style="text-align: center; font-family: var(--font-messy); font-size: 1.3rem;">
+                No soy un mal chico... y yo daría todo por ti. Siempre serás mi princesa. Perdón por no se él... 
+            </p>
+
+            <div class="lacre">V+C</div> 
+            <p style="text-align: center; font-family: var(--font-gothic); font-size: 2rem; color: var(--accent-vivid); margin-top: 10px; text-shadow: 0 0 10px rgba(255,0,0,0.5);">
+                ¡Te amo con todo mi ser!
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function nextPage(num) {
+            const p1 = document.getElementById('page1');
+            const p2 = document.getElementById('page2');
+            
+            p1.style.transition = '0.8s';
+            p1.style.opacity = '0';
+            p1.style.transform = 'translateY(-20px)';
+            
+            setTimeout(() => {
+                p1.style.display = 'none';
+                p2.classList.add('active');
+            }, 800);
+        }
+
+        function createEmoItem() {
+            const item = document.createElement('div');
+            item.classList.add('emo-item');
+            const models = ['🖤', '💔', '🥀', '💀', '🕯️', '✟', '🩹'];
+            item.innerHTML = models[Math.floor(Math.random() * models.length)];
+            item.style.left = Math.random() * 100 + 'vw';
+            item.style.animationDuration = Math.random() * 3 + 5 + 's';
+            item.style.fontSize = Math.random() * 20 + 15 + 'px';
+            document.body.appendChild(item);
+            setTimeout(() => { item.remove(); }, 8000);
+        }
+        
+        setInterval(createEmoItem, 600);
+    </script>
+</body>
+</html>
